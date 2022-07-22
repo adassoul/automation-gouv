@@ -2,12 +2,14 @@
     "general":{
         "e" : 0,
         "cookies" : "#tarteaucitronAllDenied2",
-        "time_stamp": 3
+        "time_stamp": 1
     },
 
     "error":{
         "surcharge" : "body > h1",
-        "forbidden" : "body > h1"
+        "surcharge_message" : "Service surchargé",
+        "forbidden" : "body > h1",
+        "forbidden_message" : "403 Forbidden"
     },
 
     "first_page":{

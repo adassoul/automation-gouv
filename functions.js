@@ -25,7 +25,8 @@ var one_cycle = async (driver, radio_button, method = By.css) => {
     console.log(text)
     if (text === third_page.message_no_rdv_found){
         print_highlited("no available RDVs.");
-        // await driver.back();
+        console.log("before history.back")
+        await driver.navigate().back()
     }
     else{
         print_highlited("YES!!")
@@ -47,8 +48,14 @@ var whole_cycle = async (driver, method = By.css) => {
 
 var handle_error = async (driver) => {
     console.log("before : "+error.forbidden)
-    await driver.findElement(By.css, error.forbidden)
+    const error_text = await driver.findElement(By.css(error.forbidden)).getText()
     console.log(error.forbidden)
+    if(error_text === error.surcharge_message){
+        print_highlited("Surcharge... Try in a minute")
+    }
+    else if(error_text === ""){
+        print_highlited("Forbidden... Try in an hour")
+    }
 }
 
 module.exports = { click_button, wait, one_cycle, handle_error, whole_cycle };

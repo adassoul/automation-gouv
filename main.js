@@ -49,6 +49,17 @@ const { click_button, wait, one_cycle, handle_error, whole_cycle } = require("./
                 console.log("1st try else if wait")
                 await wait(general.time_stamp)
                 await one_cycle(driver, second_page.bouton_radio_1)
+                try{
+                    
+                }
+                catch(e){
+                    console.log("!!"+e+"!!")
+                }
+                console.log("after history.back")
+
+                await wait(10000)
+
+
             }
             else{
                 console.log("1st try else else wait")
@@ -68,7 +79,7 @@ const { click_button, wait, one_cycle, handle_error, whole_cycle } = require("./
             console.log("1st catch wait")
             await wait(2)
             await handle_error(driver)
-            wonsole.log("2nd catch wait")
+            console.log("2nd catch wait")
             await wait(50)
         }
         // console.log(e)
