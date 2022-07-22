@@ -1,0 +1,30 @@
+{
+    "general":{
+        "e" : 0,
+        "cookies" : "#tarteaucitronAllDenied2",
+        "time_stamp": 3
+    },
+
+    "error":{
+        "surcharge" : "body > h1",
+        "forbidden" : "body > h1"
+    },
+
+    "first_page":{
+        "case_à_cocher" : "#condition",
+        "bouton_demande_rdv" : "#submit_Booking > input:nth-child(1)"
+    },
+
+    "second_page":{
+        "bouton_radio_1" : "#planning13782",
+        "bouton_radio_2" : "#planning20779",
+        "bouton_radio_3" : "#planning21505",
+        "bouton_étape_suivante" : "#submit_Booking > input"
+    },
+
+    "third_page":{
+        "texte_non" : "#FormBookingCreate",
+        "message_no_rdv_found" : "Il n'existe plus de plage horaire libre pour votre demande de rendez-vous. Veuillez recommencer ultérieurement.",
+        "bouton_terminer" : "#submit_Booking > input"
+    }
+}
