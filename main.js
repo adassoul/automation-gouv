@@ -1,3 +1,6 @@
+// this version of the code has the steps that led to writing the whole_cycle fctn 
+// in if-clauses
+
 const { Builder, By, Key, until } = require("selenium-webdriver")
 const chrome = require("selenium-webdriver/chrome");
 const { NoSuchElementError } = require("selenium-webdriver/lib/error");
