@@ -16,6 +16,12 @@ var print_highlited = (text) => {
     console.log("\n\n"+text+"\n\n")
 }
 
+var pre_whole_cycle = async (driver) => {
+    await driver.get(general.gouv_url);
+    await click_button(driver, first_page.case_à_cocher)
+    await click_button(driver, first_page.bouton_demande_rdv)
+}
+
 var one_cycle = async (driver, radio_button, method = By.css) => {
     // second page //ok
     await click_button(driver, radio_button, method);
@@ -67,4 +73,4 @@ var handle_error = async (driver) => {
     }
 }
 
-module.exports = { click_button, wait, one_cycle, handle_error, whole_cycle };
+module.exports = { click_button, wait, one_cycle, handle_error, whole_cycle, pre_whole_cycle };
