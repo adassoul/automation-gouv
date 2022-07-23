@@ -24,18 +24,15 @@ var pre_whole_cycle = async (driver) => {
     await click_button(driver, first_page.bouton_demande_rdv)
 }
 
-var one_cycle = async (driver, radio_button, method = By.css) => {
+var one_cycle = async (driver, radio_button) => {
     // second page
-    await click_button(driver, radio_button, method);
-    await click_button(driver, second_page.bouton_étape_suivante, method)
+    await click_button(driver, radio_button);
+    await click_button(driver, second_page.bouton_étape_suivante)
     // third page
-    let text = await driver.findElement(By.css(third_page.texte_non)).getText(); //undefined??
-    console.log(text)
+    let text = await driver.findElement(By.css(third_page.texte_non)).getText();
     if (text === third_page.message_no_rdv_found){
         print_highlited("no available RDVs.");
-        console.log("before history.back")
         await driver.navigate().back()
-        console.log("after history.back")
     }
     else{
         print_highlited("YES!!")
@@ -44,18 +41,12 @@ var one_cycle = async (driver, radio_button, method = By.css) => {
     }
 }
 
-var whole_cycle = async (driver, method = By.css) => {
+var whole_cycle = async (driver) => {
     const buttons = [
         second_page.bouton_radio_1,
         second_page.bouton_radio_2,
         second_page.bouton_radio_3
     ]
-    // let a = 0
-    // while(!a){
-    //     buttons.map(async button => {
-    //         a = await one_cycle(driver, button)
-    //     })
-    // }
     for(let i = 0; i < buttons.length; i++){
         try{
             await pre_whole_cycle(driver)
@@ -68,18 +59,15 @@ var whole_cycle = async (driver, method = By.css) => {
                 console.error(e)
     
                 await handle_error(driver)
-    
-                await wait(50)
+
             }
         }
     }
 }
 
 var handle_error = async (driver) => {
-    // console.log("before : "+error.forbidden)
     const error_text = await driver.findElement(By.css(error.forbidden)).getText()
     const d = new Date()
-    // console.log(error.forbidden)
     if(error_text === error.surcharge_message){
         print_highlited(d.toLocaleTimeString() + " : surcharge... Try in a minute")
         await wait(60)
@@ -90,4 +78,4 @@ var handle_error = async (driver) => {
     }
 }
 
-module.exports = { click_button, wait, one_cycle, handle_error, whole_cycle, pre_whole_cycle };
+module.exports = { whole_cycle };
