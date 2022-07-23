@@ -1,15 +1,17 @@
 const { By } = require("selenium-webdriver")
 const { first_page, second_page, third_page, general, error } = require("./elements.json")
 const { setTimeout } = require("timers/promises");
+const { NoSuchElementError } = require("selenium-webdriver/lib/error");
 
 var click_button = async (driver, button, method = By.css) => {
     await driver.findElement(method(button)).click()
 };
 
 var wait = async (ms) => {
-    console.log("waiting "+ms+" seconds...")
+    const d = new Date()
+    console.log(d.toLocaleTimeString() + " : waiting "+ms+" seconds...")
     await setTimeout(1000*ms);
-    console.log("waited "+ms+" seconds")
+    console.log(d.toLocaleTimeString() + " : waited "+ms+" seconds")
 }
 
 var print_highlited = (text) => {
@@ -23,10 +25,10 @@ var pre_whole_cycle = async (driver) => {
 }
 
 var one_cycle = async (driver, radio_button, method = By.css) => {
-    // second page //ok
+    // second page
     await click_button(driver, radio_button, method);
     await click_button(driver, second_page.bouton_étape_suivante, method)
-    // third page //ko
+    // third page
     let text = await driver.findElement(By.css(third_page.texte_non)).getText(); //undefined??
     console.log(text)
     if (text === third_page.message_no_rdv_found){
@@ -55,20 +57,35 @@ var whole_cycle = async (driver, method = By.css) => {
     //     })
     // }
     for(let i = 0; i < buttons.length; i++){
-        await one_cycle(driver, buttons[i])
+        try{
+            await pre_whole_cycle(driver)
+            await one_cycle(driver, buttons[i])
+        }
+        catch(e){
+            if (e instanceof NoSuchElementError){
+                console.log("/////********"+ e.name +"********//////")
+                console.log("/////****************//////")
+                console.error(e)
+    
+                await handle_error(driver)
+    
+                await wait(50)
+            }
+        }
     }
 }
 
 var handle_error = async (driver) => {
     // console.log("before : "+error.forbidden)
     const error_text = await driver.findElement(By.css(error.forbidden)).getText()
+    const d = new Date()
     // console.log(error.forbidden)
     if(error_text === error.surcharge_message){
-        print_highlited("Surcharge... Try in a minute")
+        print_highlited(d.toLocaleTimeString() + " : surcharge... Try in a minute")
         await wait(60)
     }
     else if(error_text === error.forbidden_message){
-        print_highlited("Forbidden... Try in an hour")
+        print_highlited(d.toLocaleTimeString() + " : forbidden... Try in an hour")
         await wait(3600)
     }
 }
