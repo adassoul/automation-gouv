@@ -16,7 +16,6 @@ const { general, error, first_page, second_page, third_page } = require("./eleme
 const { click_button, wait, one_cycle, handle_error, whole_cycle } = require("./functions");
 
 
-
 (async () => {
     try{
         await driver.get(gouv_url);
@@ -42,7 +41,7 @@ const { click_button, wait, one_cycle, handle_error, whole_cycle } = require("./
         }
         else {
             //2
-            let un_cycle = 1
+            let un_cycle = 0
             console.log("1st try else wait")
             await wait(general.time_stamp)
             if(un_cycle){
@@ -64,7 +63,9 @@ const { click_button, wait, one_cycle, handle_error, whole_cycle } = require("./
             else{
                 console.log("1st try else else wait")
                 await wait(general.time_stamp)
-                await whole_cycle(driver)
+                while(1){
+                    await whole_cycle(driver)
+                }
             }
         }
 

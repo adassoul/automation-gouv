@@ -27,6 +27,7 @@ var one_cycle = async (driver, radio_button, method = By.css) => {
         print_highlited("no available RDVs.");
         console.log("before history.back")
         await driver.navigate().back()
+        console.log("after history.back")
     }
     else{
         print_highlited("YES!!")
@@ -36,25 +37,33 @@ var one_cycle = async (driver, radio_button, method = By.css) => {
 }
 
 var whole_cycle = async (driver, method = By.css) => {
-    buttons = [
+    const buttons = [
         second_page.bouton_radio_1,
         second_page.bouton_radio_2,
         second_page.bouton_radio_3
     ]
-    buttons.map(button => {
-        one_cycle(driver, button)
-    })
+    // let a = 0
+    // while(!a){
+    //     buttons.map(async button => {
+    //         a = await one_cycle(driver, button)
+    //     })
+    // }
+    for(let i = 0; i < buttons.length; i++){
+        await one_cycle(driver, buttons[i])
+    }
 }
 
 var handle_error = async (driver) => {
-    console.log("before : "+error.forbidden)
+    // console.log("before : "+error.forbidden)
     const error_text = await driver.findElement(By.css(error.forbidden)).getText()
-    console.log(error.forbidden)
+    // console.log(error.forbidden)
     if(error_text === error.surcharge_message){
         print_highlited("Surcharge... Try in a minute")
+        await wait(60)
     }
-    else if(error_text === ""){
+    else if(error_text === error.forbidden_message){
         print_highlited("Forbidden... Try in an hour")
+        await wait(3600)
     }
 }
 
