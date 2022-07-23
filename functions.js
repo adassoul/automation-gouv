@@ -48,9 +48,12 @@ var whole_cycle = async (driver, method = By.css) => {
     //         a = await one_cycle(driver, button)
     //     })
     // }
-    for(let i = 0; i < buttons.length; i++){
-        await one_cycle(driver, buttons[i])
-    }
+    // for(let i = 0; i < buttons.length; i++){
+    //     await one_cycle(driver, buttons[i])
+    // }
+    buttons.map(async (button) => {
+        await one_cycle(driver, button)
+    })
 }
 
 var handle_error = async (driver) => {
