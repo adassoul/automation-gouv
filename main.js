@@ -6,10 +6,12 @@ let driver = new Builder()
 .setChromeOptions()
 .build()
 
-const { whole_cycle } = require("./functions");
+const { whole_cycle, creates_file_name } = require("./functions");
 
 (async () => {
+    const file_path = creates_file_name(driver)
+    
     while(1){
-        await whole_cycle(driver)
+        await whole_cycle(driver, file_path)
     }
 })();
